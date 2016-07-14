@@ -29,19 +29,21 @@
         //var index = streams.home.length - 1; // last item in streams.home array
         var pullFromArray = function () {
           var tweet = streams.home.shift(); // captures last tweet
-          var $span = $('<span></span>').addClass('line ' + tweet.user);
-          var $tweet = $('<span></span><br>')
-          .text(': ' + tweet.message); // adds tweet text to span
+
+          var $date = $('<span class="time"></span>').text(jQuery.timeago(tweet.created_at));
           var $user = $('<span></span>').text('@' + tweet.user)
             .addClass('userName'); // makes a span for the username w/ class username
-          var $date = $('<span class="time"></span>').text(jQuery.timeago(tweet.created_at));
-          $date.appendTo($span);
-          $user.appendTo($span);
-          $tweet.appendTo($span); // adds new tweet span to the page
+          var $tweet = $('<span></span><br>')
+            .text(': ' + tweet.message); // adds tweet text to span
+
+          var $line = $('<span></span>').addClass('line ' + tweet.user);
+          $date.appendTo($line);
+          $user.appendTo($line);
+          $tweet.appendTo($line); // adds new tweet span to the page
           if ($('#timeline').find('h2').text() === tweet.user) {
-            $span.appendTo('#timeline');
+            $line.appendTo('#timeline');
           } else {
-            $span.appendTo($feed);
+            $line.appendTo($feed);
           }
         };
 
@@ -68,8 +70,7 @@
             var thisUser = '.'+$(this).parent().attr('class').split(' ')[1];
             $('<h2></h2>').addClass('filterTitle')
               .text(thisUser.slice(1)).appendTo('#timeline');
-            $(thisUser).appendTo('#timeline');
-            //$(this).parent().children().appendTo('#timeline');
+            $('.line').filter(thisUser).appendTo('#timeline');
             filtered = true;
           }
         });
@@ -78,9 +79,7 @@
           if (filtered) {
             var thisUser = '.'+$(this).attr('class').split(' ')[1];
             $('.filterTitle').remove();
-            $('#timeline span').appendTo($feed);
-            //$('#feed').find('br').last().remove();
-            $('<br>').appendTo($feed);
+            $('#timeline').children().appendTo($feed);
             filtered = false;
           }
         });
