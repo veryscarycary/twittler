@@ -8,8 +8,16 @@
   </head>
   <body>
     <h1>Twittler</h1>
-    <div id=feed></div>
-    <div id=timeline></div>
+    <section id="forms">
+    <h2>Username:</h2>
+      <input type="text" id="usernameInput" value=""><br>
+      <h2>Tweet:</h2>
+      <input type="text" id="tweetInput" value="">
+      <button>Post Tweet</button><br>
+    </section>
+
+    <div id="feed"></div>
+    <div id="timeline"></div>
 
     <script>
 
@@ -26,7 +34,7 @@
           .text(': ' + tweet.message); // adds tweet text to span
           var $user = $('<span></span>').text('@' + tweet.user)
             .addClass('userName'); // makes a span for the username w/ class username
-          var $date = $('<span></span>').text(jQuery.timeago(tweet.created_at));
+          var $date = $('<span class="time"></span>').text(jQuery.timeago(tweet.created_at));
           $date.appendTo($span);
           $user.appendTo($span);
           $tweet.appendTo($span); // adds new tweet span to the page
@@ -37,17 +45,29 @@
           }
         };
 
-        while(streams.home.length > 0){
+        while (streams.home.length > 0){
           pullFromArray();
-          //index -= 1;
         }
+
+        $('button').on('click', function() {
+          var username = $('#usernameInput').val();
+          streams.users[username] = [];
+          var tweetText = $('#tweetInput').val();
+          var tweet = {};
+          tweet.user = username;
+          tweet.message = tweetText;
+          tweet.created_at = new Date();
+          streams.users[username].push(tweet);
+          streams.home.unshift(tweet);
+        });
 
         var filtered = false;
 
         $('#feed').on('click','.userName', function() {
           if (!filtered) {
             var thisUser = '.'+$(this).parent().attr('class').split(' ')[1];
-            $('<h2></h2>').text(thisUser.slice(1)).appendTo('#timeline');
+            $('<h2></h2>').addClass('filterTitle')
+              .text(thisUser.slice(1)).appendTo('#timeline');
             $(thisUser).appendTo('#timeline');
             //$(this).parent().children().appendTo('#timeline');
             filtered = true;
@@ -57,7 +77,7 @@
         $('#timeline').on('click','span', function() {
           if (filtered) {
             var thisUser = '.'+$(this).attr('class').split(' ')[1];
-            $('h2').remove();
+            $('.filterTitle').remove();
             $('#timeline span').appendTo($feed);
             //$('#feed').find('br').last().remove();
             $('<br>').appendTo($feed);
