@@ -2,7 +2,7 @@
   License: none (public domain)
 */
 
-/*html, body, div, span, applet, object, iframe,
+html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -24,7 +24,7 @@ time, mark, audio, video {
 }
 /* HTML5 display-role reset for older browsers */
 
-/*
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
@@ -47,7 +47,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-*/
+
 /*
   ========================================
   Custom styles
@@ -55,13 +55,43 @@ table {
 */
 
 body {
+  margin-left: 20px;
   background-color: beige;
   color: #888;
   font: 300 12px/18px "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin-top: 20px;
+  margin-bottom: 22px;
+  font-size: 26px;
+  font-weight: bold;
+  color: black;
+}
+
+h2 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+
+input button {
+  float:left;
+}
+
 .userName {
   color: cornflowerblue;
+}
+
+.time {
+  margin-right: 5px;
 }
 
 #feed {
